@@ -1,0 +1,18 @@
+* {
+    box-sizing: border-box;
+}
+
+
+.grid {
+  border: 2px solid red;
+  display: grid;
+  grid-template-rows: auto auto auto;
+  grid-template-columns: auto auto auto;
+ 
+}
+
+.grid--square {
+    font-size: 25px;
+    padding: 3em;
+    border: 1px solid black;
+}
