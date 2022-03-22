@@ -109,10 +109,6 @@ const Game = function(boardSize, player1, player2) {
                 };
 
                 const winningMarker = this.grid[matchingRowIndex][0];
-
-                // console.log("Horizontal Match: " + isRowMatch);
-                // console.log('Matching cells: ');
-                // console.log(matchedHorizCells);
     
                 if (winningMarker === this.player1Marker) {
                     player1.setIsWinner(true);
@@ -144,8 +140,9 @@ const Game = function(boardSize, player1, player2) {
             // get array of cell co-ords for matching column
 
             if (isColMatch) {
+                
                 for (let i = 0; i < this.grid.length; i++) {
-                    matchedVertCells.push([matchingColIndex, i])
+                    matchedVertCells.push([i, matchingColIndex]);
                 };
                 const winningMarker = this.grid[0][matchingColIndex];   
                 if (winningMarker === this.player1Marker) {
@@ -157,11 +154,6 @@ const Game = function(boardSize, player1, player2) {
                     };
             };
 
-            console.log("Vertical Match: " + isColMatch);
-            console.log('Matching cells: ');
-            console.log(matchedVertCells);
-            
-           
 
             // DIAGONALS
 
@@ -203,10 +195,6 @@ const Game = function(boardSize, player1, player2) {
                 matchedDiagCells = tempDiagIndexArray;
             };
 
-      
-            // console.log(" Diagonal Match: " + isDiagMatch);
-            // console.log('Matching cells: ');
-            // console.log(matchedDiagCells);
 
             if (isDiagMatch) {
                 const winningMarker = this.getGrid(matchedDiagCells[0]);

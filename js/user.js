@@ -9,21 +9,16 @@ const render = function(game) {
         };
     $('.grid').html(output);
 
-
-
-
     addClickHandlers();  // re-adds click handlers after html has been regenerated
 };
 
 
 
 const addClickHandlers = function() {
-    console.log(game.getIsPlay())
+
     
     $('.grid--square').on("click", function() {
-        console.log(game.getIsPlay())
         
-
             if (game.getIsPlay()) {
 
                 if (player1.getTurn() && game.isGridCellEmpty(this.id)) {  // if its player 1's turn and the grid cell hasn't already been played
@@ -33,9 +28,8 @@ const addClickHandlers = function() {
                     if (game.checkForWin()) {
                         const winLineArray = game.checkForWin();
                         render(game);
-                        renderWinLine(winLineArray);
+                        renderWin(winLineArray);
                         game.setIsPlay(false);
-                        console.log(game.checkForWin())
                     };
         
                 } else if (player2.getTurn() && game.isGridCellEmpty(this.id)) {
@@ -45,10 +39,9 @@ const addClickHandlers = function() {
                     if (game.checkForWin()) {
                         const winLineArray = game.checkForWin();
                         render(game);
-                        renderWinLine(winLineArray);
+                        renderWin(winLineArray);
                         game.setIsPlay(false);
                     };
-                    console.log(game.checkForWin());
                 };
          
                 if (game.getIsPlay()) {
@@ -58,9 +51,9 @@ const addClickHandlers = function() {
     })
 };
 
-render(game);
 
-const renderWinLine = function(winLineArray) {
+
+const renderWin = function(winLineArray) {
     const domIDArray = [];  // array with string elements that can be used for jQuery DOM ID e.g. ["#1-0", "#1-1"] instead of [ [1,0], [1,1] ]
     for (let gridCoord of winLineArray) {
         const stringElem = gridCoord.join('-');
@@ -68,10 +61,9 @@ const renderWinLine = function(winLineArray) {
     };
 
     for (let domID of domIDArray) {
-        console.log(domID)
         $(domID).css("background-color", "red")
     };
-    console.log(player1.getIsWinner())
+   
     if (player1.getIsWinner()){
         $('body').append(`<p>Player 1 is the Winner!</p>`)
     }
@@ -79,6 +71,15 @@ const renderWinLine = function(winLineArray) {
         $('body').append(`<p>Player 2 is the Winner!</p>`)
     }
 };
+
+
+$(document).ready(function () {
+    render(game);
+});
+
+
+
+
 
 
 
