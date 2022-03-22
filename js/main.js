@@ -8,16 +8,36 @@ const Player = function(isHuman, marker) {
         marker: marker,
 
         isTurn: false,
+
+        isWin: false,
+
         // accepts string separated by '-' e.g. '1-2' (ready for DOM)
-        takeTurn: function(board, cellIDStr) {
+        takeTurn : function(board, cellIDStr) {
             
             board.setGrid(cellIDStr.split('-'), this.marker);
+        },
+
+        getMarker : function(){
+            return this.marker;
+        },
+
+        getTurn : function() {
+            return this.isTurn
+        },
+
+        setWin : function(boolean) {
+            this.isWin = boolean
+        },
+
+        setTurn : function(boolean) {
+            this.isTurn = boolean
         }
+
 
     }
 };
 
-const Board = function(boardSize) {
+const Board = function(boardSize, player1, player2) {
     
     return {
         
@@ -25,8 +45,8 @@ const Board = function(boardSize) {
         
         boardSize: boardSize,
 
-        player1Marker: null,
-        player2Marker: null,
+        player1Marker: player1.getMarker(),
+        player2Marker: player2.getMarker(),
     
         initialize: function() {
             for (let i = 0; i < boardSize; i++) {
@@ -35,9 +55,21 @@ const Board = function(boardSize) {
             }
          },
 
-         checkForWin: function() {
+        // takes an array [x,y]
+        getGrid: function([xRow, yCol]) {
+            return this.grid[xRow][yCol];
+        },
+
+        // takes an array [x,y] and a value
+        setGrid: function([xRow, yCol], value) {
+            this.grid[xRow][yCol] = value;    
+        },
+
+        checkForWin: function() {
             
             // ROW (HORIZONTAL)
+
+            let winningPlayer = null;
 
             let isRowMatch = false;
             let matchingRowIndex;
@@ -58,13 +90,22 @@ const Board = function(boardSize) {
                 for (let i = 0; i < this.grid.length; i++) {
                     matchedHorizCells.push([matchingRowIndex, i])
                 };
+
+                const winningMarker = this.grid[matchingRowIndex][0];
+
+                // console.log("Horizontal Match: " + isRowMatch);
+                // console.log('Matching cells: ');
+                // console.log(matchedHorizCells);
+    
+                if (winningMarker === this.player1Marker) {
+                    player1.setWin(true);
+                    return [matchedHorizCells];
+                }   else if (winningMarker === this.player2Marker) {
+                    player2.setWin(true);
+                    return [matchedHorizCells];
+                    };
             };
-
-            console.log("Horizontal Match: " + isRowMatch);
-            console.log('Matching cells: ');
-            console.log(matchedHorizCells);
-
-           
+            
             //COLUMN (VERTICAL)
             
             let isColMatch = false;
@@ -89,6 +130,14 @@ const Board = function(boardSize) {
                 for (let i = 0; i < this.grid.length; i++) {
                     matchedVertCells.push([matchingColIndex, i])
                 };
+                const winningMarker = this.grid[matchingColIndex][0];
+                if (winningMarker === this.player1Marker) {
+                    player1.setWin(true);
+                    return [matchedVertCells];
+                }   else if (winningMarker === this.player2Marker) {
+                    player2.setWin(true);
+                    return [matchedVertCells];
+                    };
             };
 
             console.log("Vertical Match: " + isColMatch);
@@ -130,7 +179,6 @@ const Board = function(boardSize) {
                 tempDiagIndexArray.push([x,y]);
                 x-- ; // decrements x co-ord
                 y++ ; // increments y co-ord    To traverse grid bottom left to top right ([2,0], [1,1], [0,2])
-
             };
             
             if (tempDiagValArray.every((val) => val && val === tempDiagValArray[0])) {  // checks that all values in the results array are the same as the first item, and not emnpty strings.
@@ -138,55 +186,46 @@ const Board = function(boardSize) {
                 matchedDiagCells = tempDiagIndexArray;
             };
 
-        
       
-            console.log(" Diagonal Match: " + isDiagMatch);
-            console.log('Matching cells: ');
-            console.log(matchedDiagCells);
+            // console.log(" Diagonal Match: " + isDiagMatch);
+            // console.log('Matching cells: ');
+            // console.log(matchedDiagCells);
 
+            if (isDiagMatch) {
+                const winningMarker = this.getGrid(matchedDiagCells[0]);
+                if (winningMarker === this.player1Marker) {
+                    player1.setWin(true);
+                    return [matchedDiagCells];
+                }   else if (winningMarker === this.player2Marker) {
+                    player2.setWin(true);
+                    return [matchedDiagCells];
+                    };
 
-         },
+            };
 
-         // takes an array [x,y]
-         getGrid: function([xRow, yCol]) {
-             return this.grid[xRow][yCol];
-         },
-         // takes an array [x,y] and a value
-         setGrid: function([xRow, yCol], value) {
-             this.grid[xRow][yCol] = value;    
-         }
-
-        
-
-    }
-}
-
-
-const render = function(board) {
-    console.log(board.grid);
-    let output = '';
-    $('.grid').css('background-color', 'lightblue')
-    for (let row of board.grid) {
-        for (let item of row) {
-            output += `<div class="grid--square">${item}</div>`
-        };
+         }  
     };
-    $('.grid').html(output);
 };
+
+
+
+   
+
 
 const player1 = Player(true, 'X');
 const player2 = Player(true, 'O');
-const board = Board(3);
+const board = Board(3, player1, player2);
 board.initialize();
-player1.takeTurn(board, "1-0");
-player2.takeTurn(board, "2-0");
-player1.takeTurn(board, "1-1");
-player2.takeTurn(board, "2-1");
-player1.takeTurn(board, "0-0");
-player2.takeTurn(board, "2-2");
-board.grid = [['O', 'O', 'O'],['X', 'O', 'O'],['O', 'X', 'X'],]
-board.checkForWin();
-render(board);
+player1.setTurn(true);
+// player1.takeTurn(board, "1-0");
+// player2.takeTurn(board, "2-0");
+// player1.takeTurn(board, "1-1");
+// player2.takeTurn(board, "2-1");
+// player1.takeTurn(board, "0-0");
+// player2.takeTurn(board, "2-2");
+// board.grid = [['X', 'X', 'O'],['O', 'X', 'O'],['O', 'O', 'X'],]
+// console.log(board.checkForWin());
+
 
 
 
