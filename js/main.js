@@ -12,9 +12,9 @@ const Player = function(isHuman, marker) {
         isWin: false,
 
         // accepts string separated by '-' e.g. '1-2' (ready for DOM)
-        takeTurn : function(board, cellIDStr) {
+        takeTurn : function(game, cellIDStr) {
             
-            board.setGrid(cellIDStr.split('-'), this.marker);
+            game.setGrid(cellIDStr.split('-'), this.marker);
         },
 
         getMarker : function(){
@@ -37,7 +37,7 @@ const Player = function(isHuman, marker) {
     }
 };
 
-const Board = function(boardSize, player1, player2) {
+const Game = function(boardSize, player1, player2) {
     
     return {
         
@@ -227,19 +227,19 @@ const Board = function(boardSize, player1, player2) {
 
 const player1 = Player(true, 'X');
 const player2 = Player(true, 'O');
-const board = Board(3, player1, player2);
-board.initialize();
-board.setIsPlay(true);
+const game = Game(3, player1, player2);
+game.initialize();
+game.setIsPlay(true);
 player1.setTurn(true);
 
-// player1.takeTurn(board, "1-0");
-// player2.takeTurn(board, "2-0");
-// player1.takeTurn(board, "1-1");
-// player2.takeTurn(board, "2-1");
-// player1.takeTurn(board, "0-0");
-// player2.takeTurn(board, "2-2");
-// board.grid = [['X', 'X', 'O'],['O', 'X', 'O'],['O', 'O', 'X'],]
-// console.log(board.checkForWin());
+// player1.takeTurn(game, "1-0");
+// player2.takeTurn(game, "2-0");
+// player1.takeTurn(game, "1-1");
+// player2.takeTurn(game, "2-1");
+// player1.takeTurn(game, "0-0");
+// player2.takeTurn(game, "2-2");
+// game.grid = [['X', 'X', 'O'],['O', 'X', 'O'],['O', 'O', 'X'],]
+// console.log(game.checkForWin());
 
 
 
