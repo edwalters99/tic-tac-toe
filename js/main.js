@@ -47,6 +47,8 @@ const Board = function(boardSize, player1, player2) {
 
         player1Marker: player1.getMarker(),
         player2Marker: player2.getMarker(),
+
+        isPlay: false,
     
         initialize: function() {
             for (let i = 0; i < boardSize; i++) {
@@ -65,11 +67,22 @@ const Board = function(boardSize, player1, player2) {
             this.grid[xRow][yCol] = value;    
         },
 
+        getIsPlay: function() {
+            return this.isPlay;
+        },
+
+        setIsPlay: function(boolean) {
+            this.isPlay = boolean
+        },
+
+        isGridCellEmpty: function(cellIDStr) {
+            const cellContents = this.getGrid(cellIDStr.split('-'));
+            return cellContents === "";
+        },
+
         checkForWin: function() {
             
             // ROW (HORIZONTAL)
-
-            let winningPlayer = null;
 
             let isRowMatch = false;
             let matchingRowIndex;
@@ -216,7 +229,9 @@ const player1 = Player(true, 'X');
 const player2 = Player(true, 'O');
 const board = Board(3, player1, player2);
 board.initialize();
+board.setIsPlay(true);
 player1.setTurn(true);
+
 // player1.takeTurn(board, "1-0");
 // player2.takeTurn(board, "2-0");
 // player1.takeTurn(board, "1-1");

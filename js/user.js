@@ -14,19 +14,70 @@ const render = function(board) {
 
 
 const addClickHandlers = function() {
-
+    console.log(board.getIsPlay())
+    
     $('.grid--square').on("click", function() {
-        if (player1.getTurn()) {
-            player1.takeTurn(board, this.id);
-        } else if (player2.getTurn()) {
-            player2.takeTurn(board, this.id);
-        };
-        player1.setTurn(!player1.getTurn());
-        player2.setTurn(!player2.getTurn());
-        render(board);
+        console.log(board.getIsPlay())
+        
+
+            if (board.getIsPlay()) {
+
+                if (player1.getTurn() && board.isGridCellEmpty(this.id)) {  // if its player 1's turn and the grid cell hasn't already been played
+                    player1.takeTurn(board, this.id);
+                    player1.setTurn(!player1.getTurn());  // toggles player's turns
+                    player2.setTurn(!player2.getTurn());
+                    if (board.checkForWin()) {
+                        board.setIsPlay(false);
+                    };
+        
+                } else if (player2.getTurn() && board.isGridCellEmpty(this.id)) {
+                    player2.takeTurn(board, this.id);
+                    player1.setTurn(!player1.getTurn());  // toggles player's turns
+                    player2.setTurn(!player2.getTurn());
+                    if (board.checkForWin()) {
+                        board.setIsPlay(false);
+                    };
+                    console.log(board.checkForWin());
+                };
+         
+                render(board);
+
+
+
+
+
+
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+
 
      
     })
+
+
+
+
+
+
+
+
+
+ 
 };
 
 render(board);
