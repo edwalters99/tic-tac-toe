@@ -37,26 +37,67 @@ const Board = function(boardSize) {
             }
          },
 
-        //  checkforWin: function() {
-        //      // horizontal
-        //      console.log(this.grid)
-        //     for (let i = 0; i < this.grid.length; i++) {
-        //         const row = this.grid[i];
-              
-        //         for (j = 0; j < row.length; j++) {
-        //             const checkArray = [];
-                    
-                   
-        //             const cell = row[j];
-        //             if (!checkArray.includes(cell)) {
-        //                 checkArray.push(cell)
-        //             }
-                   
-        //             // console.log(cell + "     " + i,j)
-        //         }
-        //         console.log(checkArray) + "checkarray"
-        //      }
-        //  },
+         checkForWin: function() {
+            // horizontal
+            console.log(this.grid)
+            let foundMatchRow = false;
+            let matchRowIndex;
+            for (let i = 0; i < this.grid.length; i++) {
+                const row = this.grid[i]; // defines 'row' array for each iteration
+                if (row.every((val) => val && val === row[0])) {  // checks that all values in the row array are the same as the first item, and not empty strings (val is truthy)
+                    foundMatchRow = true;
+                    matchRowIndex = i;  // identifies the matching row
+                };
+            };
+            // console.log(foundMatchRow);
+            // console.log(matchRowIndex);
+
+            //vertical
+            
+            let foundMatchCol = false;
+            let matchColIndex;
+            
+            for (let i = 0; i < this.grid.length; i++) {   // iterates through each column
+                const tempColArray = [];
+                for (let j = 0; j < this.grid.length; j++) { // iterates through each row
+             
+                tempColArray.push(this.getGrid([j, i]))  // creates a temporary array for each column
+            };
+
+        //    console.log(tempColArray)
+           if (tempColArray.every((val) => val && val === tempColArray[0])) {  // checks that all values in the column array are the same as the first item, and not emnpty strings.
+               foundMatchCol = true;
+               matchColIndex = i;
+           }
+
+            }
+            
+        //    console.log(foundMatchCol);
+        //    console.log(matchColIndex);
+
+           // diagonals
+           let foundMatchDiag = false;
+           let matchDiagCells = [];
+           // top left to bottom right 
+           const tempDiagArray = [];
+            for (let i = 0; i < this.grid.length; i++) {
+                tempDiagArray.push(this.getGrid([i,i]));
+                matchDiagCells.push([i,i]);
+            };
+            console.log(tempDiagArray)
+            if (tempDiagArray.every((val) => val && val === tempDiagArray[0])) {  // checks that all values in the column array are the same as the first item, and not emnpty strings.
+                foundMatchDiag = true;
+
+            }
+
+
+            console.log(foundMatchDiag);
+            console.log(matchDiagCells);
+
+
+
+
+         },
 
          // takes an array [x,y]
          getGrid: function([xRow, yCol]) {
@@ -95,7 +136,8 @@ player1.takeTurn(board, "1-1");
 player2.takeTurn(board, "2-1");
 player1.takeTurn(board, "0-0");
 player2.takeTurn(board, "2-2");
-// board.checkforWin();
+board.grid = [['X', 'O', 'O'],['X', 'X', 'O'],['O', 'X', 'X'],]
+board.checkForWin();
 render(board);
 
 
