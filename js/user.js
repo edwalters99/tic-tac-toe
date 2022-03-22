@@ -8,6 +8,10 @@ const render = function(game) {
             };
         };
     $('.grid').html(output);
+
+
+
+
     addClickHandlers();  // re-adds click handlers after html has been regenerated
 };
 
@@ -66,8 +70,14 @@ const renderWinLine = function(winLineArray) {
     for (let domID of domIDArray) {
         console.log(domID)
         $(domID).css("background-color", "red")
-        
     };
+    console.log(player1.getIsWinner())
+    if (player1.getIsWinner()){
+        $('body').append(`<p>Player 1 is the Winner!</p>`)
+    }
+    if (player2.getIsWinner()){
+        $('body').append(`<p>Player 2 is the Winner!</p>`)
+    }
 };
 
 

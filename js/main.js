@@ -9,7 +9,7 @@ const Player = function(isHuman, marker) {
 
         isTurn: false,
 
-        isWin: false,
+        isWinner: false,
 
         // accepts string separated by '-' e.g. '1-2' (ready for DOM)
         takeTurn : function(game, cellIDStr) {
@@ -25,8 +25,12 @@ const Player = function(isHuman, marker) {
             return this.isTurn
         },
 
-        setWin : function(boolean) {
-            this.isWin = boolean
+        getIsWinner : function() {
+            return this.isWinner;
+        },
+        
+        setIsWinner : function(boolean) {
+            this.isWinner = boolean
         },
 
         setTurn : function(boolean) {
@@ -111,10 +115,10 @@ const Game = function(boardSize, player1, player2) {
                 // console.log(matchedHorizCells);
     
                 if (winningMarker === this.player1Marker) {
-                    player1.setWin(true);
+                    player1.setIsWinner(true);
                     return matchedHorizCells;
                 }   else if (winningMarker === this.player2Marker) {
-                        player2.setWin(true);
+                        player2.setIsWinner(true);
                         return matchedHorizCells;
                     };
             };
@@ -145,10 +149,10 @@ const Game = function(boardSize, player1, player2) {
                 };
                 const winningMarker = this.grid[0][matchingColIndex];   
                 if (winningMarker === this.player1Marker) {
-                    player1.setWin(true);
+                    player1.setIsWinner(true);
                     return matchedVertCells;
                 }   else if (winningMarker === this.player2Marker) {
-                        player2.setWin(true);
+                        player2.setIsWinner(true);
                         return matchedVertCells;
                     };
             };
@@ -207,10 +211,10 @@ const Game = function(boardSize, player1, player2) {
             if (isDiagMatch) {
                 const winningMarker = this.getGrid(matchedDiagCells[0]);
                 if (winningMarker === this.player1Marker) {
-                    player1.setWin(true);
+                    player1.setIsWinner(true);
                     return matchedDiagCells;
                 }   else if (winningMarker === this.player2Marker) {
-                        player2.setWin(true);
+                        player2.setIsWinner(true);
                         return matchedDiagCells;
                     };
 
