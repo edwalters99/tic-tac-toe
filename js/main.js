@@ -8,15 +8,13 @@ const Player = function(isHuman, marker) {
         marker: marker,
 
         isTurn: false,
-        // accepts string separated by - e.g. '1-2' (ready for DOM)
+        // accepts string separated by '-' e.g. '1-2' (ready for DOM)
         takeTurn: function(board, cellIDStr) {
             
             board.setGrid(cellIDStr.split('-'), this.marker);
         }
 
     }
-
-  
 };
 
 const Board = function(boardSize) {
@@ -38,63 +36,113 @@ const Board = function(boardSize) {
          },
 
          checkForWin: function() {
-            // horizontal
-            console.log(this.grid)
-            let foundMatchRow = false;
-            let matchRowIndex;
+            
+            // ROW (HORIZONTAL)
+
+            let isRowMatch = false;
+            let matchingRowIndex;
+            const matchedHorizCells = [];
+
             for (let i = 0; i < this.grid.length; i++) {
-                const row = this.grid[i]; // defines 'row' array for each iteration
+                const row = this.grid[i]; // 'row' array for each iteration
+                
                 if (row.every((val) => val && val === row[0])) {  // checks that all values in the row array are the same as the first item, and not empty strings (val is truthy)
-                    foundMatchRow = true;
-                    matchRowIndex = i;  // identifies the matching row
+                    isRowMatch = true;
+                    matchingRowIndex = i;  // identifies the matching row by index (used below)
                 };
             };
-            // console.log(foundMatchRow);
-            // console.log(matchRowIndex);
+        
+            // get array of cell co-ords for matching row
 
-            //vertical
+            if (isRowMatch) {
+                for (let i = 0; i < this.grid.length; i++) {
+                    matchedHorizCells.push([matchingRowIndex, i])
+                };
+            };
+
+            console.log("Horizontal Match: " + isRowMatch);
+            console.log('Matching cells: ');
+            console.log(matchedHorizCells);
+
+           
+            //COLUMN (VERTICAL)
             
-            let foundMatchCol = false;
-            let matchColIndex;
+            let isColMatch = false;
+            let matchingColIndex;
+            const matchedVertCells = [];
             
             for (let i = 0; i < this.grid.length; i++) {   // iterates through each column
                 const tempColArray = [];
                 for (let j = 0; j < this.grid.length; j++) { // iterates through each row
-             
                 tempColArray.push(this.getGrid([j, i]))  // creates a temporary array for each column
+                };
+
+                if (tempColArray.every((val) => val && val === tempColArray[0])) {  // checks that all values in the column array are the same as the first item, and not emnpty strings.
+                isColMatch = true;
+                matchingColIndex = i;
+                };
             };
 
-        //    console.log(tempColArray)
-           if (tempColArray.every((val) => val && val === tempColArray[0])) {  // checks that all values in the column array are the same as the first item, and not emnpty strings.
-               foundMatchCol = true;
-               matchColIndex = i;
-           }
+            // get array of cell co-ords for matching column
 
-            }
+            if (isColMatch) {
+                for (let i = 0; i < this.grid.length; i++) {
+                    matchedVertCells.push([matchingColIndex, i])
+                };
+            };
+
+            console.log("Vertical Match: " + isColMatch);
+            console.log('Matching cells: ');
+            console.log(matchedVertCells);
             
-        //    console.log(foundMatchCol);
-        //    console.log(matchColIndex);
+           
 
-           // diagonals
-           let foundMatchDiag = false;
-           let matchDiagCells = [];
-           // top left to bottom right 
-           const tempDiagArray = [];
+            // DIAGONALS
+
+            let isDiagMatch = false;
+            let matchedDiagCells = [];  
+
+            // top left to bottom right 
+            let tempDiagValArray = [];
+            let tempDiagIndexArray = [];
+            
             for (let i = 0; i < this.grid.length; i++) {
-                tempDiagArray.push(this.getGrid([i,i]));
-                matchDiagCells.push([i,i]);
+                tempDiagValArray.push(this.getGrid([i,i]));  // traverses grid [0,0], [1,1] etc and pushes values to temporary array for comparison
+                tempDiagIndexArray.push([i,i]); // pushes indexes to temp array [0,0], [1,1], [2,2]
             };
-            console.log(tempDiagArray)
-            if (tempDiagArray.every((val) => val && val === tempDiagArray[0])) {  // checks that all values in the column array are the same as the first item, and not emnpty strings.
-                foundMatchDiag = true;
+      
+            if (tempDiagValArray.every((val) => val && val === tempDiagValArray[0])) {  // checks that all values in the results array are the same as the first item, and not empty strings.
+                isDiagMatch = true;
+                matchedDiagCells = tempDiagIndexArray; 
+            };
 
-            }
+            //  bottom left to top right
+            tempDiagValArray = [];
+            tempDiagIndexArray = [];
 
+            let x = this.grid.length -1;
+            let y = 0;
 
-            console.log(foundMatchDiag);
-            console.log(matchDiagCells);
+           // initializes with x = 2 & y = 0 (bottom left)
 
+            for (let i = 0; i < this.grid.length; i++) {
+                tempDiagValArray.push(this.getGrid([x, y]));
+                tempDiagIndexArray.push([x,y]);
+                x-- ; // decrements x co-ord
+                y++ ; // increments y co-ord    To traverse grid bottom left to top right ([2,0], [1,1], [0,2])
 
+            };
+            
+            if (tempDiagValArray.every((val) => val && val === tempDiagValArray[0])) {  // checks that all values in the results array are the same as the first item, and not emnpty strings.
+                isDiagMatch = true;
+                matchedDiagCells = tempDiagIndexArray;
+            };
+
+        
+      
+            console.log(" Diagonal Match: " + isDiagMatch);
+            console.log('Matching cells: ');
+            console.log(matchedDiagCells);
 
 
          },
@@ -136,7 +184,7 @@ player1.takeTurn(board, "1-1");
 player2.takeTurn(board, "2-1");
 player1.takeTurn(board, "0-0");
 player2.takeTurn(board, "2-2");
-board.grid = [['X', 'O', 'O'],['X', 'X', 'O'],['O', 'X', 'X'],]
+board.grid = [['O', 'O', 'O'],['X', 'O', 'O'],['O', 'X', 'X'],]
 board.checkForWin();
 render(board);
 
