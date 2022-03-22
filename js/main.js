@@ -112,10 +112,10 @@ const Game = function(boardSize, player1, player2) {
     
                 if (winningMarker === this.player1Marker) {
                     player1.setWin(true);
-                    return [matchedHorizCells];
+                    return matchedHorizCells;
                 }   else if (winningMarker === this.player2Marker) {
-                    player2.setWin(true);
-                    return [matchedHorizCells];
+                        player2.setWin(true);
+                        return matchedHorizCells;
                     };
             };
             
@@ -143,13 +143,13 @@ const Game = function(boardSize, player1, player2) {
                 for (let i = 0; i < this.grid.length; i++) {
                     matchedVertCells.push([matchingColIndex, i])
                 };
-                const winningMarker = this.grid[matchingColIndex][0];
+                const winningMarker = this.grid[0][matchingColIndex];   
                 if (winningMarker === this.player1Marker) {
                     player1.setWin(true);
-                    return [matchedVertCells];
+                    return matchedVertCells;
                 }   else if (winningMarker === this.player2Marker) {
-                    player2.setWin(true);
-                    return [matchedVertCells];
+                        player2.setWin(true);
+                        return matchedVertCells;
                     };
             };
 
@@ -208,10 +208,10 @@ const Game = function(boardSize, player1, player2) {
                 const winningMarker = this.getGrid(matchedDiagCells[0]);
                 if (winningMarker === this.player1Marker) {
                     player1.setWin(true);
-                    return [matchedDiagCells];
+                    return matchedDiagCells;
                 }   else if (winningMarker === this.player2Marker) {
-                    player2.setWin(true);
-                    return [matchedDiagCells];
+                        player2.setWin(true);
+                        return matchedDiagCells;
                     };
 
             };

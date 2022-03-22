@@ -27,7 +27,11 @@ const addClickHandlers = function() {
                     player1.setTurn(!player1.getTurn());  // toggles player's turns
                     player2.setTurn(!player2.getTurn());
                     if (game.checkForWin()) {
+                        const winLineArray = game.checkForWin();
+                        render(game);
+                        renderWinLine(winLineArray);
                         game.setIsPlay(false);
+                        console.log(game.checkForWin())
                     };
         
                 } else if (player2.getTurn() && game.isGridCellEmpty(this.id)) {
@@ -35,17 +39,38 @@ const addClickHandlers = function() {
                     player1.setTurn(!player1.getTurn());  // toggles player's turns
                     player2.setTurn(!player2.getTurn());
                     if (game.checkForWin()) {
+                        const winLineArray = game.checkForWin();
+                        render(game);
+                        renderWinLine(winLineArray);
                         game.setIsPlay(false);
                     };
                     console.log(game.checkForWin());
                 };
          
-                render(game);
+                if (game.getIsPlay()) {
+                    render(game);
+                };
             };  
     })
 };
 
 render(game);
+
+const renderWinLine = function(winLineArray) {
+    const domIDArray = [];  // array with string elements that can be used for jQuery DOM ID e.g. ["#1-0", "#1-1"] instead of [ [1,0], [1,1] ]
+    for (let gridCoord of winLineArray) {
+        const stringElem = gridCoord.join('-');
+        domIDArray.push( "#" + stringElem);
+    };
+
+    for (let domID of domIDArray) {
+        console.log(domID)
+        $(domID).css("background-color", "red")
+        
+    };
+};
+
+
 
 
 
