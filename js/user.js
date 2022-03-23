@@ -93,12 +93,14 @@ const renderTurn = function() {
         $('#player1').removeClass('player-active');
         $('#player2').removeClass('player-active');
         
-        if (player1.getTurn()) {
-            $('#player1').addClass('player-active');
-        };
-        if (player2.getTurn()) {
-            $('#player2').addClass('player-active');
-        };
+        if (player1.getIsWinner() === false && player2.getIsWinner() === false){
+            if (player1.getTurn()) {
+                $('#player1').addClass('player-active');
+            };
+            if (player2.getTurn()) {
+                $('#player2').addClass('player-active');
+            };
+        }
 };
 
 const renderMarker = function() {

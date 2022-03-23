@@ -258,7 +258,7 @@ const newGame = function(player1Marker, player2Marker, boardSize) {
     
 
 };
-newGame('X', 'O', 5);
+newGame('X', 'O', 3);
 
 
 
