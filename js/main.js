@@ -3,7 +3,7 @@
 const Player = function(isHuman, marker) {
     return {
 
-        isHuman: isHuman,
+        // isHuman: isHuman,
 
         marker: marker,
 
@@ -12,32 +12,35 @@ const Player = function(isHuman, marker) {
         isWinner: false,
 
         // accepts string separated by '-' e.g. '1-2' (ready for DOM)
-        takeTurn : function(game, cellIDStr) {
+        takeTurn: function(game, cellIDStr) {
             
-            game.setGrid(cellIDStr.split('-'), this.marker);
+            game.setGridVal(cellIDStr.split('-'), this.marker);
         },
 
         // getters and setters for object properties
-        getMarker : function(){
+        getMarker: function(){
             return this.marker;
         },
 
-        getTurn : function() {
+        getTurn: function() {
             return this.isTurn
         },
 
-        getIsWinner : function() {
+        getIsWinner: function() {
             return this.isWinner;
         },
+
+        // getIsHuman: function() {
+        //     return this.isHuman;
+        // },
         
-        setIsWinner : function(boolean) {
+        setIsWinner: function(boolean) {
             this.isWinner = boolean
         },
 
-        setTurn : function(boolean) {
+        setTurn: function(boolean) {
             this.isTurn = boolean
-        }
-
+        },
 
     }
 };
@@ -61,13 +64,17 @@ const Game = function(boardSize, player1, player2) {
             return this.boardSize;
         },
 
+        getBoard: function() {
+            return this.grid;
+        },
+
         // takes an array [x,y], returns cell contents
-        getGrid: function([xRow, yCol]) {
+        getGridVal: function([xRow, yCol]) {
            return this.grid[xRow][yCol];
         },
 
         // takes an array [x,y] and a value. Sets cell contents to the value.
-        setGrid: function([xRow, yCol], value) {
+        setGridVal: function([xRow, yCol], value) {
            this.grid[xRow][yCol] = value;    
         },
 
@@ -76,7 +83,7 @@ const Game = function(boardSize, player1, player2) {
         },
 
         setIsPlay: function(boolean) {
-           this.isPlay = boolean
+           this.isPlay = boolean;
         },
     
         
@@ -90,7 +97,7 @@ const Game = function(boardSize, player1, player2) {
 
         // checks a provided Cell ID String (passed from DOM) and returns a boolean if that grid position is empty or not. 
         isGridCellEmpty: function(cellIDStr) {
-            const cellContents = this.getGrid(cellIDStr.split('-'));
+            const cellContents = this.getGridVal(cellIDStr.split('-'));
             return cellContents === "";
         },
 
@@ -140,7 +147,7 @@ const Game = function(boardSize, player1, player2) {
             for (let i = 0; i < this.grid.length; i++) {   // iterates through each column
                 const tempColArray = [];
                 for (let j = 0; j < this.grid.length; j++) { // iterates through each row
-                tempColArray.push(this.getGrid([j, i]))  // creates a temporary array for each column
+                tempColArray.push(this.getGridVal([j, i]))  // creates a temporary array for each column
                 };
 
                 if (tempColArray.every((val) => val && val === tempColArray[0])) {  // checks that all values in the column array are the same as the first item, and not emnpty strings.
@@ -177,7 +184,7 @@ const Game = function(boardSize, player1, player2) {
             let tempDiagIndexArray = [];
             
             for (let i = 0; i < this.grid.length; i++) {
-                tempDiagValArray.push(this.getGrid([i,i]));  // traverses grid [0,0], [1,1] etc and pushes values to temporary array for comparison
+                tempDiagValArray.push(this.getGridVal([i,i]));  // traverses grid [0,0], [1,1] etc and pushes values to temporary array for comparison
                 tempDiagIndexArray.push([i,i]); // pushes indexes to temp array [0,0], [1,1], [2,2]
             };
       
@@ -196,7 +203,7 @@ const Game = function(boardSize, player1, player2) {
            // initializes with x = 2 & y = 0 (bottom left)
 
             for (let i = 0; i < this.grid.length; i++) {
-                tempDiagValArray.push(this.getGrid([x, y]));
+                tempDiagValArray.push(this.getGridVal([x, y]));
                 tempDiagIndexArray.push([x,y]);
                 x-- ; // decrements x co-ord
                 y++ ; // increments y co-ord    To traverse grid bottom left to top right ([2,0], [1,1], [0,2])
@@ -209,7 +216,7 @@ const Game = function(boardSize, player1, player2) {
 
 
             if (isDiagMatch) {
-                const winningMarker = this.getGrid(matchedDiagCells[0]);
+                const winningMarker = this.getGridVal(matchedDiagCells[0]);
                 if (winningMarker === this.player1Marker) {
                     player1.setIsWinner(true);
                     return matchedDiagCells;
@@ -232,8 +239,8 @@ const Game = function(boardSize, player1, player2) {
              };
             return gridFull;
          }
-    };  // return Object
-};  // Game()
+    };  // closes return Object
+};  // closes Game()
 
 
 

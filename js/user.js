@@ -1,18 +1,24 @@
 const render = function(game) {
     // console.log(game.grid);
     let output = '';
-    $('.grid').css('background-color', 'lightblue')  // CHANGE THIS
+    // $('.grid').css('background-color', 'lightblue')  // CHANGE THIS
     // const gridRowCSS = 'grid-template-rows', 'repeat(4, auto)';
     // const gridColCSS = 'grid-template-columns', 'repeat(4, auto)';
     // console.log(gridRowCSS) 
  
-    $('.grid').css('grid-template-rows', `repeat(${game.getBoardSize()}, auto)`);
-    $('.grid').css('grid-template-columns', `repeat(${game.getBoardSize()}, auto)`);
+    
+    $('html').css('font-size', `${70 / game.getBoardSize()}px`);
+    $('.grid').css('grid-template-rows', `repeat(${game.getBoardSize()}, minmax(0, 1fr))`);
+    $('.grid').css('grid-template-columns', `repeat(${game.getBoardSize()}, minmax(0, 1fr))`);
+   
+   
     for (let i = 0; i < game.grid.length; i++) {
         for (let j = 0; j < game.grid.length; j++) {
-            output += `<div class="grid--square" id="${i}-${j}">${game.getGrid([i, j])}</div>`
+            output += `<div class="grid--square" id="${i}-${j}">${game.getGridVal([i, j])}</div>`
             };
         };
+        
+    console.log(output)
     $('.grid').html(output);
 
     addClickHandlers();  // re-adds click handlers after html has been regenerated
@@ -51,8 +57,7 @@ const addClickHandlers = function() {
                     game.setIsPlay(false);
                 };
             };
-    
-    })
+    });
 };
 
 
