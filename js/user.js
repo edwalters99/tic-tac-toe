@@ -21,7 +21,6 @@ const render = function(game) {
 
 
 const addClickHandlers = function() {
-
     
     $('.grid--square').on("click", function() {
         
@@ -31,32 +30,35 @@ const addClickHandlers = function() {
                     player1.takeTurn(game, this.id);
                     player1.setTurn(!player1.getTurn());  // toggles player's turns
                     player2.setTurn(!player2.getTurn());
-                    if (game.checkForWin()) {
-                        const winLineArray = game.checkForWin();
-                        render(game);
-                        renderWin(winLineArray);
-                        game.setIsPlay(false);
-                    };
-        
+                
                 } else if (player2.getTurn() && game.isGridCellEmpty(this.id)) {
                     player2.takeTurn(game, this.id);
                     player1.setTurn(!player1.getTurn());  // toggles player's turns
                     player2.setTurn(!player2.getTurn());
-                    if (game.checkForWin()) {
-                        const winLineArray = game.checkForWin();
-                        render(game);
-                        renderWin(winLineArray);
-                        game.setIsPlay(false);
-                    };
                 };
-         
-                if (game.getIsPlay()) {
-                    render(game);
+                
+                render(game);  // renders after each turn
+
+
+                if (game.checkGridFull()) {
+                    renderGameOver();
+                    game.setIsPlay(false);
+                        
                 };
-            };  
+                if (game.checkForWin()) {
+                    const winLineArray = game.checkForWin();
+                    renderWin(winLineArray);
+                    game.setIsPlay(false);
+                };
+            };
+    
     })
 };
 
+
+const renderGameOver = function() {
+    $('body').append(`<p>GAME OVER</p>`)
+}
 
 
 const renderWin = function(winLineArray) {

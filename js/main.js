@@ -17,6 +17,7 @@ const Player = function(isHuman, marker) {
             game.setGrid(cellIDStr.split('-'), this.marker);
         },
 
+        // getters and setters for object properties
         getMarker : function(){
             return this.marker;
         },
@@ -53,7 +54,33 @@ const Game = function(boardSize, player1, player2) {
         player2Marker: player2.getMarker(),
 
         isPlay: false,
+        
+        //getters and setters for object properties
+
+        getBoardSize: function() {
+            return this.boardSize;
+        },
+
+        // takes an array [x,y], returns cell contents
+        getGrid: function([xRow, yCol]) {
+           return this.grid[xRow][yCol];
+        },
+
+        // takes an array [x,y] and a value. Sets cell contents to the value.
+        setGrid: function([xRow, yCol], value) {
+           this.grid[xRow][yCol] = value;    
+        },
+
+        getIsPlay: function() {
+           return this.isPlay;
+        },
+
+        setIsPlay: function(boolean) {
+           this.isPlay = boolean
+        },
     
+        
+        // initializes a new board and populates it with empty strings.
         initialize: function() {
             for (let i = 0; i < boardSize; i++) {
                 const row = new Array(this.boardSize).fill('');  
@@ -61,33 +88,14 @@ const Game = function(boardSize, player1, player2) {
             }
          },
 
-         getBoardSize: function() {
-             return this.boardSize;
-         },
-
-        // takes an array [x,y]
-        getGrid: function([xRow, yCol]) {
-            return this.grid[xRow][yCol];
-        },
-
-        // takes an array [x,y] and a value
-        setGrid: function([xRow, yCol], value) {
-            this.grid[xRow][yCol] = value;    
-        },
-
-        getIsPlay: function() {
-            return this.isPlay;
-        },
-
-        setIsPlay: function(boolean) {
-            this.isPlay = boolean
-        },
-
+        // checks a provided Cell ID String (passed from DOM) and returns a boolean if that grid position is empty or not. 
         isGridCellEmpty: function(cellIDStr) {
             const cellContents = this.getGrid(cellIDStr.split('-'));
             return cellContents === "";
         },
 
+        // Checks Board for win in horizontal, vertical and diagonal directions. If match found, returns an array containing the grid co-ords of the matching tiles.
+       
         checkForWin: function() {
             
             // ROW (HORIZONTAL)
@@ -209,12 +217,23 @@ const Game = function(boardSize, player1, player2) {
                         player2.setIsWinner(true);
                         return matchedDiagCells;
                     };
-
             };
 
-         }  
-    };
-};
+         },
+
+        checkGridFull : function() {
+            let gridFull = true;
+            for (let row of this.grid) {
+                 for (let cell of row) {
+                     if (cell === "") {
+                         gridFull = false;
+                     };
+                 };
+             };
+            return gridFull;
+         }
+    };  // return Object
+};  // Game()
 
 
 
@@ -223,7 +242,7 @@ const Game = function(boardSize, player1, player2) {
 
 const player1 = Player(true, 'X');
 const player2 = Player(true, 'O');
-const game = Game(10, player1, player2);
+const game = Game(3, player1, player2);
 game.initialize();
 game.setIsPlay(true);
 player1.setTurn(true);
