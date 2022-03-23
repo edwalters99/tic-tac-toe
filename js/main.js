@@ -244,14 +244,23 @@ const Game = function(boardSize, player1, player2) {
 
 
    
+let player1;
+let player2;
+let game;
+
+const newGame = function(player1Marker, player2Marker, boardSize) {
+    player1 = Player(true, player1Marker);
+    player2 = Player(true, player2Marker);
+    game = Game(boardSize, player1, player2);
+    game.initialize();
+    game.setIsPlay(true);
+    player1.setTurn(true);
+    
+
+};
+newGame('X', 'O', 5);
 
 
-const player1 = Player(true, 'X');
-const player2 = Player(true, 'O');
-const game = Game(9, player1, player2);
-game.initialize();
-game.setIsPlay(true);
-player1.setTurn(true);
 
 // player1.takeTurn(game, "1-0");
 // player2.takeTurn(game, "2-0");

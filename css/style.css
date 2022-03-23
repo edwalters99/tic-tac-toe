@@ -54,7 +54,18 @@ header {
     align-items: center;
 }
 
+footer {
+    height: 10vh;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
 
+}
 
 .container {
     margin-top: 3em;
@@ -63,9 +74,9 @@ header {
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    padding: 50px;
+    padding-left: 80px;
+    padding-right: 80px;
 }
-
 
 
 .grid {
@@ -125,20 +136,22 @@ header {
     padding: 1em;
 }
 
-.sidepanel-left {
+.sidepanel-left, .sidepanel-right {
     display: flex;
     justify-content: center;;
     align-items: center;
     max-width: 400px;
 }
 
-.sidepanel-left > h2 {
+.sidepanel-left h2 {
     margin-right: 30px;
     font-size: 35px;
 }
 
 .sidepanel-left h3 {
     font-size: 35px;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 .player-active, .winline-active {
@@ -148,7 +161,33 @@ header {
 .player-marker {
     color: #ffffff;
     margin-left: 25px;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
+
+.settings-input-number {
+    font-family: 'Roboto', sans-serif;
+    font-size: 25px;
+    padding-left: 10px;
+    padding-right: 0px;
+    border-radius: 15px;
+}
+
+.settings-input-button {
+    font-family: 'Roboto', sans-serif;
+    font-size: 18px;
+    background-color: white;
+    margin-left: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.5s all;
+}
+
+.settings-input-button:hover {
+    transform: scale(1.05);
+    background-color: rgb(208, 207, 207);
+}
+
 
 
 

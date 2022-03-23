@@ -65,7 +65,7 @@ const addClickHandlers = function() {
 
 
 const renderGameOver = function() {
-    $('body').append(`<p>GAME OVER</p>`)
+    $('#message-output').text(`GAME OVER! - It's a Draw!`)
 }
 
 
@@ -81,10 +81,10 @@ const renderWin = function(winLineArray) {
     };
    
     if (player1.getIsWinner()){
-        $('body').append(`<p>Player 1 is the Winner!</p>`)
+        $('#message-output').text(`Player 1 is the Winner!`)
     }
     if (player2.getIsWinner()){
-        $('body').append(`<p>Player 2 is the Winner!</p>`)
+        $('#message-output').text(`Player 2 is the Winner!`)
     }
 };
 
@@ -106,12 +106,23 @@ const renderMarker = function() {
     $('#player2-marker').text(player2.getMarker());
 };
 
+const handleGridSizeInput = function() {
+    
+    $('#input-btn').on('click', function() {
+        const userInputGridSize = $('#input-num').val()
+        console.log(userInputGridSize)
+        newGame('X', 'O', Number(userInputGridSize));
+        render(game);
+    })
+}
+
 
 
 
 $(document).ready(function () {
     render(game);
     renderMarker();
+    handleGridSizeInput();
 });
 
 
