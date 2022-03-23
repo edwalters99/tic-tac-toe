@@ -13,7 +13,6 @@ const Player = function(isHuman, marker) {
 
         // accepts string separated by '-' e.g. '1-2' (ready for DOM)
         takeTurn: function(game, cellIDStr) {
-            
             game.setGridVal(cellIDStr.split('-'), this.marker);
         },
 
@@ -249,7 +248,7 @@ const Game = function(boardSize, player1, player2) {
 
 const player1 = Player(true, 'X');
 const player2 = Player(true, 'O');
-const game = Game(3, player1, player2);
+const game = Game(9, player1, player2);
 game.initialize();
 game.setIsPlay(true);
 player1.setTurn(true);
