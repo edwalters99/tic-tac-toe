@@ -4,11 +4,9 @@
 
 
 .grid {
-  border: 2px solid red;
+  border: 2px solid black;
   display: grid;
-  grid-template-rows: auto auto auto ;
-  grid-template-columns: auto auto auto;
- 
+
 }
 
 .grid--square {

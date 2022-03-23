@@ -61,6 +61,10 @@ const Game = function(boardSize, player1, player2) {
             }
          },
 
+         getBoardSize: function() {
+             return this.boardSize;
+         },
+
         // takes an array [x,y]
         getGrid: function([xRow, yCol]) {
             return this.grid[xRow][yCol];
@@ -219,7 +223,7 @@ const Game = function(boardSize, player1, player2) {
 
 const player1 = Player(true, 'X');
 const player2 = Player(true, 'O');
-const game = Game(3, player1, player2);
+const game = Game(10, player1, player2);
 game.initialize();
 game.setIsPlay(true);
 player1.setTurn(true);
