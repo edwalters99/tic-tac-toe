@@ -47,6 +47,8 @@ const render = function(game) {
     // };  
 
     
+    game.player1Marker  = player1.getMarker(),
+    game.player2Marker  = player2.getMarker(),
 
     addClickHandlers();  // re-adds click handlers after html has been regenerated
 };
@@ -61,8 +63,10 @@ const addClickHandlers = function() {
         
         console.log($('#input-player1-marker').val())
         console.log($('#input-player2-marker').val())
-        player1.setMarker($('#input-player1-marker').val())
-        player2.setMarker($('#input-player2-marker').val())
+        player1.setMarker($('#input-player1-marker').val());
+        player2.setMarker($('#input-player2-marker').val());
+        console.log(player1.marker)
+        console.log(player2.marker)
         
         render(game);
         $('#message-panel-btn').off('click');
@@ -98,6 +102,7 @@ const addClickHandlers = function() {
                 };
                 if (game.checkForWin()) {
                     const winLineArray = game.checkForWin();
+                    console.log(winLineArray)
                     renderWin(winLineArray);
                     game.setIsPlay(false);
                 };
@@ -269,7 +274,9 @@ const restartAll = function() {
     // };
     player1Score = 0;
     player2Score = 0;
-    newGame('X', 'O', game.getBoardSize());
+    const player1marker = $('#input-player1-marker').val();
+    const player2marker = $('#input-player2-marker').val();
+    newGame(player1marker, player2marker, game.getBoardSize());
     render(game);
     $('#message-panel-btn').html(`Click to <strong>start</strong>`);
     $('#message-panel-btn').css('visibility', 'visible');

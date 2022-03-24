@@ -112,7 +112,7 @@ const Game = function(boardSize, player1, player2) {
         // Checks Board for win in horizontal, vertical and diagonal directions. If match found, returns an array containing the grid co-ords of the matching tiles.
        
         checkForWin: function() {
-            
+            console.log("RUNNING TEST2")
             // ROW (HORIZONTAL)
 
             let isRowMatch = false;
@@ -122,6 +122,7 @@ const Game = function(boardSize, player1, player2) {
             for (let i = 0; i < this.grid.length; i++) {
                 const row = this.grid[i]; // 'row' array for each iteration
                 
+
                 if (row.every((val) => val && val === row[0])) {  // checks that all values in the row array are the same as the first item, and not empty strings (val is truthy)
                     isRowMatch = true;
                     matchingRowIndex = i;  // identifies the matching row by index (used below)
@@ -136,6 +137,9 @@ const Game = function(boardSize, player1, player2) {
                 };
 
                 const winningMarker = this.grid[matchingRowIndex][0];
+                console.log(winningMarker)
+                console.log(this.player1Marker)
+                    
     
                 if (winningMarker === this.player1Marker) {
                     player1.setIsWinner(true);
