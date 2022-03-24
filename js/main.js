@@ -3,8 +3,6 @@
 const Player = function(marker, name) {
     return {
 
-        // isHuman: isHuman,
-
         marker: marker,
 
         isTurn: false,
@@ -36,9 +34,9 @@ const Player = function(marker, name) {
             return this.name;
         },
 
-        // getIsHuman: function() {
-        //     return this.isHuman;
-        // },
+        setMarker: function(string) {
+            this.marker = string;
+        },
         
         setIsWinner: function(boolean) {
             this.isWinner = boolean
@@ -261,17 +259,18 @@ let player2;
 let game;
 
 
-const newGame = function(player1Marker, player2Marker, boardSize) {
-    player1 = Player(player1Marker, "Player1");
-    player2 = Player(player2Marker, "Player2");
+const newGame = function(player1Marker="X", player2Marker="O", boardSize) {
+    player1 = Player(player1Marker, "Player 1");
+    player2 = Player(player2Marker, "Player 2");
     game = Game(boardSize, player1, player2);
     game.initialize();
     // game.setIsPlay(true); // removed to wait for start button
     player1.setTurn(true);
     
-
 };
     newGame('X', 'O', 3);
+
+
 
 
 

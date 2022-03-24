@@ -18,7 +18,7 @@ const render = function(game) {
     // }
   
 
-    
+
     $('.grid').css('grid-template-rows', `repeat(${game.getBoardSize()}, minmax(0, 1fr))`);
     
     $('.grid').css('grid-template-columns', `repeat(${game.getBoardSize()}, minmax(0, 1fr))`);
@@ -38,9 +38,13 @@ const render = function(game) {
             output += `<div class="grid--square" id="${i}-${j}">${game.getGridVal([i, j])}</div>`
             };
         };
-        
+     
     // console.log(output)
     $('.grid').html(output);
+
+    // if (!game.getIsPlay()) {
+    //     console.log($('.grid--square').addClass('greyed'))
+    // };  
 
     
 
@@ -54,6 +58,12 @@ const addClickHandlers = function() {
     $('#message-panel-btn').on("click", function() {
         console.log("clicked working")
         game.setIsPlay(true);
+        
+        console.log($('#input-player1-marker').val())
+        console.log($('#input-player2-marker').val())
+        player1.setMarker($('#input-player1-marker').val())
+        player2.setMarker($('#input-player2-marker').val())
+        
         render(game);
         $('#message-panel-btn').off('click');
        
@@ -93,12 +103,30 @@ const addClickHandlers = function() {
                 };
             };
     });
+
+    // if (!game.getisPlay()) {
+
+    //     $('#input-player1-marker').on('keyup', function() {
+    //         console.log($(this).val()[0])
+    //         player1.marker = $(this).val()[0] // player1.setMarker() didn't work...  
+    //     });
+    
+    //     $('#input-player2-marker').on('keyup', function() {
+    //         console.log($(this).val()[0])
+    //         player2.marker = $(this).val()[0] // player2.setMarker() didn't work...  
+    //     });
+
+
+
+    // }
+   
 };
 
 
 const renderGameOver = function() {
     $('#message-panel-btn').css('visibility', 'visible');
     $('#message-panel-btn').html(`It's a Draw! <br><strong>Click to start next Round</strong>.`)
+   
     newTurn();
 }
 
@@ -108,7 +136,9 @@ const newTurn = function() {
     $('#message-panel-btn').off('click');
     $('#message-panel-btn').on("click", function(){
         console.log("clicked")
-        newGame('X', 'O', game.getBoardSize());
+        player1.setMarker($('#input-player1-marker').val());
+        player2.setMarker($('#input-player2-marker').val());
+        newGame(player1.getMarker(), player2.getMarker(), game.getBoardSize());
         player1.setIsWinner(false);
         player2.setIsWinner(false);
         render(game);
@@ -218,6 +248,10 @@ const handleGridSizeInput = function() {
         } else {
             newGame('X', 'O', 3);
         };
+        player1Score = 0;
+        player2Score = 0;
+        player1.setMarker($('#input-player1-marker').val());
+        player2.setMarker($('#input-player2-marker').val());
         render(game);
         $('#message-panel-btn').css('visibility', 'visible');
         $('#message-panel-btn').html(`Click to <strong>start</strong>`);
