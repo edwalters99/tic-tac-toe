@@ -46,7 +46,7 @@ html {
 body {
     margin: 0;
     background: rgb(78,145,248);
-    background: linear-gradient(180deg, rgba(78,145,248,1) 0%, rgba(0,76,187,1) 100%);
+    background: linear-gradient(180deg, rgb(94, 156, 248) 0%, rgb(1, 86, 214) 100%);
 }
 
 h1, h2, h3, p {
@@ -148,7 +148,7 @@ footer {
     padding: 1em;
 }
 
-.sidepanel-left, .sidepanel-right {
+.sidepanel-left {
     display: flex;
     justify-content: center;;
     align-items: center;
@@ -164,6 +164,22 @@ footer {
     font-size: 35px;
     margin-top: 5px;
     margin-bottom: 5px;
+}
+
+.sidepanel-right {
+    max-width: 400px;
+}
+
+.sidepanel-right p {
+    padding: 10px;
+}
+
+.sidepanel-right span {
+    margin-left: 15px;
+}
+
+.sidepanel-right .small {
+    font-size: 15px;
 }
 
 .player-active, .accent {
@@ -231,6 +247,9 @@ footer {
     transform: scale(1.2);
 }
 
+.bold {
+    font-weight: bold;
+}
 
 
 

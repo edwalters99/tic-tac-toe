@@ -1,6 +1,6 @@
 
 
-const Player = function(isHuman, marker) {
+const Player = function(marker, name) {
     return {
 
         // isHuman: isHuman,
@@ -10,6 +10,9 @@ const Player = function(isHuman, marker) {
         isTurn: false,
 
         isWinner: false,
+
+        name: name,
+
 
         // accepts string separated by '-' e.g. '1-2' (ready for DOM)
         takeTurn: function(game, cellIDStr) {
@@ -29,6 +32,10 @@ const Player = function(isHuman, marker) {
             return this.isWinner;
         },
 
+        getName: function() {
+            return this.name;
+        },
+
         // getIsHuman: function() {
         //     return this.isHuman;
         // },
@@ -39,13 +46,17 @@ const Player = function(isHuman, marker) {
 
         setTurn: function(boolean) {
             this.isTurn = boolean
-        },
+        }
 
     }
 };
 
 const Game = function(boardSize, player1, player2) {
     
+    if (boardSize > 10) {
+        boardSize = 10
+    }
+
     return {
         
         grid: [],
@@ -242,15 +253,17 @@ const Game = function(boardSize, player1, player2) {
 };  // closes Game()
 
 
-
+let player1Score = 0;
+let player2Score = 0;
    
 let player1;
 let player2;
 let game;
 
+
 const newGame = function(player1Marker, player2Marker, boardSize) {
-    player1 = Player(true, player1Marker);
-    player2 = Player(true, player2Marker);
+    player1 = Player(player1Marker, "Player1");
+    player2 = Player(player2Marker, "Player2");
     game = Game(boardSize, player1, player2);
     game.initialize();
     // game.setIsPlay(true); // removed to wait for start button
