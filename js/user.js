@@ -26,9 +26,6 @@ const render = function(game) {
 
     $('.grid').html(htmlOutput);
 
-    game.player1Marker  = player1.getMarker(); // forced this update for bug fix on a first game - game object markers were not in sync with player object markers
-    game.player2Marker  = player2.getMarker();
-
     addClickHandlers();  //  click handlers need re-adding after dom has been updated with new html after each render
 };
 
@@ -36,7 +33,7 @@ const render = function(game) {
 const addClickHandlers = function() {
     
     // initial click on lower message button to start the game
-    $('#message-panel-btn').on("click", function() {
+    $('#message-panel-btn').on('click', function() {
         game.setIsPlay(true);
         player1.setMarker($('#input-player1-marker').val());
         player2.setMarker($('#input-player2-marker').val());
@@ -46,7 +43,7 @@ const addClickHandlers = function() {
     });
     
     // grid squares to make moves during the game
-    $('.grid--square').on("click", function() {
+    $('.grid--square').on('click', function() {
             if (game.getIsPlay()) {
             
                 if (player1.getTurn() && game.isGridCellEmpty(this.id)) {  // if its player 1's turn and the grid cell hasn't already been played
@@ -74,6 +71,12 @@ const addClickHandlers = function() {
                     game.setIsPlay(false);
                 };
             };
+    });
+
+    $('h1').on('click', function() {  // easter egg
+        console.log('clicked')
+        $('#input-player1-marker').val("😇");
+        $('#input-player2-marker').val("😈");
     });
 };
 
@@ -112,7 +115,7 @@ const renderWin = function(winLineArray) {
     
     for (let gridCoord of winLineArray) {
         const stringElem = gridCoord.join('-');
-        domIDArray.push( "#" + stringElem);
+        domIDArray.push( '#' + stringElem);
     };
     
     //updates dom
