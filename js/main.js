@@ -253,12 +253,12 @@ const newGame = function(player1Marker, player2Marker, boardSize) {
     player2 = Player(true, player2Marker);
     game = Game(boardSize, player1, player2);
     game.initialize();
-    game.setIsPlay(true);
+    // game.setIsPlay(true); // removed to wait for start button
     player1.setTurn(true);
     
 
 };
-newGame('X', 'O', 3);
+    newGame('X', 'O', 3);
 
 
 

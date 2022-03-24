@@ -26,10 +26,22 @@ body {
 }
 
 html {
-    font-size: 16px;
+    font-size: 10px;
     font-family: 'Roboto', sans-serif;
     color: #ffffff;
 }
+
+/* @media (min-width: 1600px) {
+    html {
+        font-size: 20px;
+    } 
+ }  */
+
+/* @media (min-width: 2000px) {
+    html {
+        font-size: 100px;
+    }
+} */
 
 body {
     margin: 0;
@@ -52,6 +64,7 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 100%;
 }
 
 footer {
@@ -71,6 +84,7 @@ footer {
 
 .container-top {
     height: 55vh;
+    padding: 10em;
 }
 
 .container-bottom {
@@ -86,8 +100,9 @@ footer {
     padding: 40px;
     color: #000000;
     flex: 1 1 50%;
-    max-width: 700px;
-    min-width: 600px;
+    max-width: 600px;
+    min-width: 500px;
+  
 }
 
 .grid--square {
@@ -99,6 +114,7 @@ footer {
     border-radius: 1em;
     min-height: 4em;
     min-width: 4em;
+  
     cursor: pointer;
     transition: 0.3s all;
 }
@@ -150,8 +166,12 @@ footer {
     margin-bottom: 5px;
 }
 
-.player-active {
+.player-active, .accent {
     color: #f74242;
+}
+
+.accent {
+    font-weight: bold;
 }
 
 .winline-active {
@@ -163,6 +183,16 @@ footer {
     margin-left: 25px;
     margin-top: 5px;
     margin-bottom: 5px;
+}
+
+.settings-container {
+    display: flex;
+    align-items: center;
+}
+
+.settings-container p {
+    font-size: 20px;
+    padding-right: 1em;
 }
 
 .settings-input-number {
@@ -194,11 +224,18 @@ footer {
    text-align: center;
    cursor: pointer;
    transition: all 2s;
+   line-height: 1.5em;
 }
 
 .messagepanel:hover {
     transform: scale(1.2);
 }
+
+
+
+
+
+
 
 
 
