@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tic-Tac-Toe</title>
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css"> -->
     <link rel="stylesheet" href="css/style.css">
     <script src="js/jquery.js"></script>
     <script src="js/main.js"></script>
@@ -14,13 +13,13 @@
    <header>
         <h1>Tic-Tac-Toe</h1>
     </header>  
-     <main>
+    <main>
         <div class="container-top">
             <div class="sidepanel-left">
                 <h2>Turn:</h2>
-                <div>
-                    <h3 id="player1" class="player-active">Player 1<span class="player-marker" id="player1-marker"></span></h3>
-                    <h3 id="player2">Player 2<span class="player-marker" id="player2-marker"></span></h3>
+                <div> <!-- flex container -->
+                    <h3 id="player1" class="player-active">Player 1:<span class="player-marker" id="player1-marker"></span></h3>
+                    <h3 id="player2">Player 2:<span class="player-marker" id="player2-marker"></span></h3>
                 </div>
             </div>
             
@@ -31,32 +30,28 @@
                 <p id="player2-score-row">Player 2: <span id="player2-score-num">x</span>/5</p>
                 <p class="small">Best of 5 games</p>
             </div>
+        </div> 
 
-        </div>
         <div class="container-bottom">
-            <div class="messagepanel" id="message-panel-btn">
+            <div class="message-panel" id="message-panel-btn">
                 Click to <strong>start</strong>
             </div>
         </div>
+
         <footer>
             <div class="settings-container">
                 <p>Size of grid:</p>
                 <input class="settings-input-number" id="input-num" type="number" min="3" max="10" placeholder="?">
                 <button class="settings-input-button" id="reset-btn">Reset Game</button>
-
                 <p>Player 1 Marker/Emoji</p>
-              
                 <input class="settings-input-marker" id="input-player1-marker" type="text" value="X" maxlength="3">
-
                 <p>Player 2 Marker/Emoji:</p>
-                
                 <input class="settings-input-marker" id="input-player2-marker" type="text" value="O" maxlength="3">
-
             </div>
         </footer>   
         
-      
     </main>  
     
 </body>
 </html>
+

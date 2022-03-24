@@ -1,18 +1,17 @@
-
+// Player Object holds all the information and methods(functions) relating to a Player. e.g. Their marker, whether it is their turn or not, if they are the winner
 
 const Player = function(marker, name) {
     return {
-
+        //initializes object properties
         marker: marker,
 
         isTurn: false,
 
         isWinner: false,
 
-        name: name,
+        name: name, 
 
-
-        // accepts string separated by '-' e.g. '1-2' (ready for DOM)
+        // accepts cellIDstr separated by '-' e.g. '1-2' (as stored in the DOM as an ID attached to each cell)
         takeTurn: function(game, cellIDStr) {
             game.setGridVal(cellIDStr.split('-'), this.marker);
         },
@@ -23,7 +22,7 @@ const Player = function(marker, name) {
         },
 
         getTurn: function() {
-            return this.isTurn
+            return this.isTurn;
         },
 
         getIsWinner: function() {
@@ -39,21 +38,25 @@ const Player = function(marker, name) {
         },
         
         setIsWinner: function(boolean) {
-            this.isWinner = boolean
+            this.isWinner = boolean;
         },
 
         setTurn: function(boolean) {
-            this.isTurn = boolean
+            this.isTurn = boolean;
         }
-
-    }
+    };
 };
 
+// Game Object holds all the information and methods(functions) relating to the current game. e.g. The board size, the grid itself (array), and methods to check if a grid cell is unused / empty, check for a win, check if the board is full. 
+
+
+// accepts 3 parameters - boardSize (from UI), player1 and player 2 objects
+
 const Game = function(boardSize, player1, player2) {
-    
-    if (boardSize > 10) {
-        boardSize = 10
-    }
+    // in case user tries to enter an excessively large grid which will break the UI / crash the program
+    if (boardSize > 15) {  
+        boardSize = 15;
+    };
 
     return {
         
@@ -64,7 +67,8 @@ const Game = function(boardSize, player1, player2) {
         player1Marker: player1.getMarker(),
         player2Marker: player2.getMarker(),
 
-        isPlay: false,
+        isPlay: false,  //is game in play?
+
         
         //getters and setters for object properties
 
@@ -76,12 +80,12 @@ const Game = function(boardSize, player1, player2) {
             return this.grid;
         },
 
-        // takes an array [x,y], returns cell contents
+        // accepts an array [x,y], returns the cell contents
         getGridVal: function([xRow, yCol]) {
            return this.grid[xRow][yCol];
         },
 
-        // takes an array [x,y] and a value. Sets cell contents to the value.
+        // accepts an array [x,y] and a value. Sets cell contents to the value.
         setGridVal: function([xRow, yCol], value) {
            this.grid[xRow][yCol] = value;    
         },
@@ -94,53 +98,61 @@ const Game = function(boardSize, player1, player2) {
            this.isPlay = boolean;
         },
     
-        
-        // initializes a new board and populates it with empty strings.
+        // initializes a new board of boardSize and populates it with empty strings.
         initialize: function() {
             for (let i = 0; i < boardSize; i++) {
                 const row = new Array(this.boardSize).fill('');  
                 this.grid.push(row);
-            }
+            };
          },
 
-        // checks a provided Cell ID String (passed from DOM) and returns a boolean if that grid position is empty or not. 
+        // checks a provided Cell ID String (passed from DOM) and returns a boolean stating if that grid position is empty or not. 
         isGridCellEmpty: function(cellIDStr) {
             const cellContents = this.getGridVal(cellIDStr.split('-'));
             return cellContents === "";
         },
 
-        // Checks Board for win in horizontal, vertical and diagonal directions. If match found, returns an array containing the grid co-ords of the matching tiles.
+        // loops through the grid to check if it is full (a draw)
+        checkGridFull : function() {
+            let gridFull = true;
+            for (let row of this.grid) {
+                 for (let cell of row) {
+                     if (cell === "") {
+                         gridFull = false;
+                     };
+                 };
+             };
+            return gridFull;
+        },
+
+
+        // Checks Board for wins in horizontal, vertical and diagonal directions. If match found, returns an array containing the grid co-ords of the matching tiles.
        
         checkForWin: function() {
-            console.log("RUNNING TEST2")
-            // ROW (HORIZONTAL)
+          
+            // *** ROW (HORIZONTAL) ***
 
             let isRowMatch = false;
             let matchingRowIndex;
             const matchedHorizCells = [];
 
             for (let i = 0; i < this.grid.length; i++) {
-                const row = this.grid[i]; // 'row' array for each iteration
+                const row = this.grid[i]; // assigns row when iterating through grid
                 
-
-                if (row.every((val) => val && val === row[0])) {  // checks that all values in the row array are the same as the first item, and not empty strings (val is truthy)
+                if (row.every((val) => val && val === row[0])) {  // checks if all values in the row array are the same as the first item, and not empty strings (val is truthy)
                     isRowMatch = true;
-                    matchingRowIndex = i;  // identifies the matching row by index (used below)
+                    matchingRowIndex = i;  // captures the matching row index (used below)
                 };
             };
         
-            // get array of cell co-ords for matching row
+            // creates an array of cell co-ords required by UI to highlight the grid. Identifies which player won the game based on the matching marker.
 
             if (isRowMatch) {
                 for (let i = 0; i < this.grid.length; i++) {
                     matchedHorizCells.push([matchingRowIndex, i])
                 };
-
                 const winningMarker = this.grid[matchingRowIndex][0];
-                console.log(winningMarker)
-                console.log(this.player1Marker)
-                    
-    
+
                 if (winningMarker === this.player1Marker) {
                     player1.setIsWinner(true);
                     return matchedHorizCells;
@@ -150,7 +162,8 @@ const Game = function(boardSize, player1, player2) {
                     };
             };
             
-            //COLUMN (VERTICAL)
+
+            // *** COLUMN (VERTICAL) ***
             
             let isColMatch = false;
             let matchingColIndex;
@@ -168,14 +181,14 @@ const Game = function(boardSize, player1, player2) {
                 };
             };
 
-            // get array of cell co-ords for matching column
+            // creates an array of cell co-ords for matching column
 
             if (isColMatch) {
-                
                 for (let i = 0; i < this.grid.length; i++) {
                     matchedVertCells.push([i, matchingColIndex]);
                 };
-                const winningMarker = this.grid[0][matchingColIndex];   
+                const winningMarker = this.grid[0][matchingColIndex];  
+
                 if (winningMarker === this.player1Marker) {
                     player1.setIsWinner(true);
                     return matchedVertCells;
@@ -191,7 +204,7 @@ const Game = function(boardSize, player1, player2) {
             let isDiagMatch = false;
             let matchedDiagCells = [];  
 
-            // top left to bottom right 
+            // Top left to bottom right 
             let tempDiagValArray = [];
             let tempDiagIndexArray = [];
             
@@ -200,19 +213,19 @@ const Game = function(boardSize, player1, player2) {
                 tempDiagIndexArray.push([i,i]); // pushes indexes to temp array [0,0], [1,1], [2,2]
             };
       
-            if (tempDiagValArray.every((val) => val && val === tempDiagValArray[0])) {  // checks that all values in the results array are the same as the first item, and not empty strings.
+            if (tempDiagValArray.every((val) => val && val === tempDiagValArray[0])) {  // checks if all values in the results array are the same as the first item, and not empty strings.
                 isDiagMatch = true;
                 matchedDiagCells = tempDiagIndexArray; 
             };
 
-            //  bottom left to top right
+            //  Bottom left to top right
             tempDiagValArray = [];
             tempDiagIndexArray = [];
 
             let x = this.grid.length -1;
             let y = 0;
 
-           // initializes with x = 2 & y = 0 (bottom left)
+           // initialization starts with x = 2 & y = 0 (bottom left) for a 3x3 grid
 
             for (let i = 0; i < this.grid.length; i++) {
                 tempDiagValArray.push(this.getGridVal([x, y]));
@@ -221,12 +234,12 @@ const Game = function(boardSize, player1, player2) {
                 y++ ; // increments y co-ord    To traverse grid bottom left to top right ([2,0], [1,1], [0,2])
             };
             
-            if (tempDiagValArray.every((val) => val && val === tempDiagValArray[0])) {  // checks that all values in the results array are the same as the first item, and not emnpty strings.
+            if (tempDiagValArray.every((val) => val && val === tempDiagValArray[0])) {  // checks if all values in the results array are the same as the first item, and not empty strings.
                 isDiagMatch = true;
                 matchedDiagCells = tempDiagIndexArray;
             };
 
-
+            // identifies winning player and sets correct player property
             if (isDiagMatch) {
                 const winningMarker = this.getGridVal(matchedDiagCells[0]);
                 if (winningMarker === this.player1Marker) {
@@ -237,57 +250,27 @@ const Game = function(boardSize, player1, player2) {
                         return matchedDiagCells;
                     };
             };
-
          },
-
-        checkGridFull : function() {
-            let gridFull = true;
-            for (let row of this.grid) {
-                 for (let cell of row) {
-                     if (cell === "") {
-                         gridFull = false;
-                     };
-                 };
-             };
-            return gridFull;
-         }
-    };  // closes return Object
+    };  // closes Object return
 };  // closes Game()
 
 
-let player1Score = 0;
+let player1Score = 0;  // used for keeping track of wins in best of 5 games
 let player2Score = 0;
    
-let player1;
+let player1; // need to be global variables so they can be accessed from within functions
 let player2;
 let game;
 
+// needs to be a function as called from user.js
+// player name customization not yet implemented
 
 const newGame = function(player1Marker="X", player2Marker="O", boardSize) {
     player1 = Player(player1Marker, "Player 1");
     player2 = Player(player2Marker, "Player 2");
     game = Game(boardSize, player1, player2);
     game.initialize();
-    // game.setIsPlay(true); // removed to wait for start button
-    player1.setTurn(true);
-    
+    player1.setTurn(true); 
 };
-    newGame('X', 'O', 3);
 
-
-
-
-
-// player1.takeTurn(game, "1-0");
-// player2.takeTurn(game, "2-0");
-// player1.takeTurn(game, "1-1");
-// player2.takeTurn(game, "2-1");
-// player1.takeTurn(game, "0-0");
-// player2.takeTurn(game, "2-2");
-// game.grid = [['X', 'X', 'O'],['O', 'X', 'O'],['O', 'O', 'X'],]
-// console.log(game.checkForWin());
-
-
-
-
-
+newGame('X', 'O', 3);
