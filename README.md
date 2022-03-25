@@ -16,7 +16,7 @@ Hours (or more likely _minutes_) of fun...
 ---------------------------------------------------------------
 ## Introduction
 
-This was my first solo project for the General Assembly Sofware Engineering Immersive bootcamp.  I learnt how to organise a project from scratch, turn game logic into code (using an OOP approach) and have some fun with styling. 
+This was my first solo project for the General Assembly Sofware Engineering Immersive bootcamp.  I learnt how to organise a project from scratch, turn game logic into code (using an OOP approach) and have some fun with styling. The biggest challenge was getting the game logic and styling to work for multiple grid sizes.
 
 ---------------------------------------------------------------
 
@@ -34,7 +34,7 @@ After each game is complete, the message button at the bottom of the screen appe
 
 ---------------------------------------------------------------
 
-## Customization:
+## Customization
 
 Customization settings are found in the footer at the bottom of the window.
 
@@ -44,7 +44,7 @@ The *player's marker* can be changed by entering up to 3 characters/symbols (or 
 
 ---------------------------------------------------------------
 
-## Easter Egg:
+## Easter Egg
 
 See if you can find the hidden Easter Egg to turn the game into Angel v Devil mode.
 
