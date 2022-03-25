@@ -26,6 +26,9 @@ const render = function(game) {
 
     $('.grid').html(htmlOutput);
 
+    game.player1Marker  = player1.getMarker(),
+    game.player2Marker  = player2.getMarker(),
+
     addClickHandlers();  //  click handlers need re-adding after dom has been updated with new html after each render
 };
 
