@@ -41,3 +41,26 @@ Customization settings are found in the footer at the bottom of the window.
 The *grid size* can be changed by selecting a number between 1 and 10 and clicking the 'Reset Game' button. Warning - all match progress will be lost.
 
 The *player's marker* can be changed by entering up to 3 characters/symbols (or an emoji) into the input box at the bottom of the window. The marker change will take effect from the start of the next game.
+
+---------------------------------------------------------------
+
+## Easter Egg:
+
+See if you can find the hidden Easter Egg to turn the game into Angel v Devil mode.
+
+---------------------------------------------------------------
+
+## Installation
+
+Download this repository, then open index.html in a web browser.
+
+Or play the game (hosted on GitHub Pages) [online](https://edwalters99.github.io/tic-tac-toe/)
+
+---------------------------------------------------------------
+
+
+## Screenshot
+
+
+![Screenshot](https://edwalters99.github.io/tic-tac-toe/screenshot.jpg)
+
